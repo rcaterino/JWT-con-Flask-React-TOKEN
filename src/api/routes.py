@@ -1,42 +1,33 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 api = Blueprint('api', __name__)
 
-#---------------------------------------------------------------------------
-# Crea una ruta para autenticar a los usuarios y devolver el token JWT.
-# La función create_access_token() se utiliza para generar el JWT.
-@app.route("/token", methods=["POST"])
+#----------------------------------------------------------------------------
+
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@api.route("/token", methods=["POST"])
 def create_token():
-    username = request.json.get("username", None)
+    email = request.json.get("email", None)
     password = request.json.get("password", None)
-    # Consulta la base de datos por el nombre de usuario y la contraseña
-    user = User.filter.query(username=username, password=password).first()
-    if User is None:
-          # el usuario no se encontró en la base de datos
+    if email != "test" or password != "test":
         return jsonify({"msg": "Bad username or password"}), 401
-    # crea un nuevo token con el id de usuario dentro
-    access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
 
 #----------------------------------------------------------------------------
-# Protege una ruta con jwt_required, bloquea las peticiones
-# sin un JWT válido presente.
-@app.route("/protected", methods=["GET"])
-@jwt_required()
-def protected():
-    # Accede a la identidad del usuario actual con get_jwt_identity
-    current_user_id = get_jwt_identity()
-    user = User.filter.get(current_user_id)
-    
-    return jsonify({"id": user.id, "username": user.username }), 200
 
-#----------------------------------------------------------------------------
 #get all users in db
 @api.route('/users', methods=['GET'])
 def getAllPeople():
@@ -62,11 +53,3 @@ def createUser():
     return "Usuario creado", 201
 
 #----------------------------------------------------------------------------
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
