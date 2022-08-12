@@ -7,6 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login";
 import injectContext from "./store/appContext";
+import { Link } from "react-router-dom";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
