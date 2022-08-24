@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -26,7 +25,7 @@ export const Login = () => {
     };
 
     fetch(
-      "https://3001-scentmay-jwtconflaskrea-2x2sd3b9pas.ws-eu59.gitpod.io/api/token",
+      "https://3001-rcaterino-jwtconflaskre-yele42szoah.ws-eu62.gitpod.io/api/token",
       opts
     )
       .then((resp) => {
