@@ -24,7 +24,7 @@ export const Login = () => {
       }),
     };
 
-    fetch(process.env.BACKEND_URL + "/api/hello", opts)
+    fetch(process.env.BACKEND_URL + "/api/token", opts)
       .then((resp) => {
         if (resp.status === 200) return resp.json();
         else console.error("Error al convertir a json");
