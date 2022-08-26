@@ -24,10 +24,7 @@ export const Login = () => {
       }),
     };
 
-    fetch(
-      "https://3001-rcaterino-jwtconflaskre-yele42szoah.ws-eu62.gitpod.io/api/token",
-      opts
-    )
+    fetch(process.env.BACKEND_URL + "/api/hello", opts)
       .then((resp) => {
         if (resp.status === 200) return resp.json();
         else console.error("Error al convertir a json");
