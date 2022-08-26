@@ -1,74 +1,50 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/home.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const token = sessionStorage.getItem("token");
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    // aquí vamos a replicar la petición que hicimos con Postman
-
-    const opts = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    };
-
-    fetch(process.env.BACKEND_URL + "/api/token", opts)
-      .then((resp) => {
-        if (resp.status === 200) return resp.json();
-        else console.error("Error al convertir a json");
-      })
-      .then((data) => {
-        console.log("this came from the backend", data);
-        sessionStorage.setItem("token", data.access_token);
-      })
-      .catch((error) => {
-        console.error("Ha ocurrido un error en el fetch", error);
-      });
+    const isLogged = actions.login(email, password);
+    if (isLogged) navigate("/");
   };
 
   return (
-    <div className="text-center mt-5">
-      <h1>Login</h1>
-      {token && token != "" && token != undefined ? (
-        "Estas logado con el token " + token
-      ) : (
-        <div>
-          <input
-            type="text"
-            placeholder="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <button onClick={handleClick}>Login</button>
-          <div>
-            <Link to={"/"} className="btn btn-primary btn-lg mt-3">
-              Ir a home
-            </Link>
-          </div>
-        </div>
-      )}
+    <div className="p-3 border-0">
+      <h1 className="text-center">Iniciar Sesión</h1>
+      <div className="d-grid gap-2">
+        <input
+          type="email"
+          className="form-control"
+          placeholder="Escriba su dirección de correo electrónico"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          className="form-control"
+          placeholder="Por favor, escriba su contraseña"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <button type="submit" className="btn btn-primary" onClick={handleClick}>Iniciar sesión</button>
+        <div className="d-grid gap-2 text-center">
+        <span>¿No tienes una cuenta?{"   "}</span>
+        <Link className="d-grid gap-2 text-center" to="/registro">
+          <button type="submit" className="btn btn-primary">
+            Regístrate
+          </button>
+        </Link>
+      </div>
+      </div>
     </div>
   );
 };

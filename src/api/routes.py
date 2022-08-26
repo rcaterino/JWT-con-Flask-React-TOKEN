@@ -19,13 +19,12 @@ api = Blueprint('api', __name__)
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])
 def create_token():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    if email != "test" or password != "test":
-        return jsonify({"msg": "Bad username or password"}), 401
-
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    
+    info_request = request.get_json()
+    query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
+    user = query.serialize()
+    access_token = create_access_token(identity=user['email'])
+    return jsonify(access_token=access_token), 200
 
 #----------------------------------------------------------------------------
 # #get all users in db
@@ -37,21 +36,30 @@ def getAllPeople():
 
 #----------------------------------------------------------------------------
 # #get only one user in db
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/user/<int:id>', methods=['GET'])
 def getUser(id):
     people_query = User.query.get(id)
     return jsonify(people_query.serialize())
 
 #----------------------------------------------------------------------------
 # #create a new user in db
-@api.route('/register', methods=['POST'])
+@api.route('/user/registro', methods=['POST'])
 def createUser():
     info_request = request.get_json()
-    newUser = User(id = info_request['id'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
+    newUser = User(nombre = info_request['nombre'], apellidos = info_request['apellidos'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
-    return "Usuario creado", 201
-
+    return jsonify("usuario creado"), 200
+    
+#----------------------------------------------------------------------------
+@api.route('/user/<int:id>', methods=['DELETE'])
+def deleteUser(id):
+    user1 = User.query.get(id)
+    if user1 is None:
+        raise APIException('User not found', status_code=404)
+    db.session.delete(user1)
+    db.session.commit()
+    return jsonify("usuario eliminado"), 200
 #----------------------------------------------------------------------------
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
