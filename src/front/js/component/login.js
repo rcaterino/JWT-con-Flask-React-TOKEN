@@ -9,16 +9,17 @@ export const Login = () => {
 
   const handleClick = () => {
     actions.login(email, password);
-    
   };
 
   return (
+    /* utilizando el operador ternario, evaluamos si la variable token dentro de store está vacía, nula o indefinida para renderizar el componente de login */
+    /* en caso que si tenemos token guardado en la sesión, renderizamos el mensaje que ya el usuaio se encuentra logeado*/
     <>
       {!store.token ||
-        store.token === null ||
-        store.token === "" ||
-        store.token === undefined ? (
-          <div className="p-3 border-0">
+      store.token === null ||
+      store.token === "" ||
+      store.token === undefined ? (
+        <div className="p-3 border-0">
           <h1 className="text-center">Iniciar Sesión</h1>
           <div className="d-grid gap-2">
             <input
@@ -39,7 +40,11 @@ export const Login = () => {
                 setPassword(e.target.value);
               }}
             />
-            <button type="submit" className="btn btn-primary" onClick={handleClick}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              onClick={handleClick}
+            >
               Iniciar sesión
             </button>
             <div className="d-grid gap-2 text-center">
@@ -52,8 +57,8 @@ export const Login = () => {
             </div>
           </div>
         </div>
-      ) :
-      (
+      ) : (
+        /**Si tenemos token, el usuario está logeado y no mostramos el formulario de login */
         <div>
           <h1>ya estás logeado</h1>
         </div>

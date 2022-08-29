@@ -9,10 +9,11 @@ export const Registro = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
- 
+
+  /* la función handleClick llama a la funciòn sigup dentro de actions en flux.js, enviando los parámetros necesarios y luego redirige el usuario al home */
   const handleClick = () => {
     actions.signup(nombre, apellidos, email, password);
-    navigate ("/");
+    navigate("/");
   };
 
   return (

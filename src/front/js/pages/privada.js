@@ -14,24 +14,22 @@ export const Privada = () => {
 
   return (
     <>
-    {!store.token ||
+      {!store.token ||
       store.token === null ||
       store.token === "" ||
       store.token === undefined ? (
         <div>
           <p>No haz iniciado sesión</p>
         </div>
-      
       ) : (
+        /* En caso que el usuario esté logeado, se renderiza el contenido a continuación */
         <div className="text-center mt-5">
-    <h1 className="text-center">Bienvenido a tu página de perfil</h1>
-      <h4>Esto es un proyecto sobre Autenticación con JWT Extention</h4>
-      <h6>Muy bien, haz iniciado sesión y tu token es:</h6>
-      <p>{store.token}</p>
-    </div>
+          <h1 className="text-center">Bienvenido a tu página de perfil</h1>
+          <h4>Esto es un proyecto sobre Autenticación con JWT Extention</h4>
+          <h6>Muy bien, haz iniciado sesión y tu token es:</h6>
+          <p>{store.token}</p>
+        </div>
       )}
     </>
-
-    
   );
 };
