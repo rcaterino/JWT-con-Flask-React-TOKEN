@@ -40,7 +40,7 @@ def getUser(id):
 
 #----------------------------------------------------------------------------
 # #create a new user in db
-@api.route('registro', methods=['POST'])
+@api.route('/registro', methods=['POST'])
 def createUser():
     info_request = request.get_json()
     newUser = User(nombre = info_request['nombre'], apellidos = info_request['apellidos'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
