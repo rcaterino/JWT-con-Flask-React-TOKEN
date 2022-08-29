@@ -4,11 +4,12 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Registro } from "./pages/registro";
-import { Privada } from "./pages/privada";
 import injectContext from "./store/appContext";
+import { Privada } from "./pages/privada";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
 
 //create your first component
 const Layout = () => {

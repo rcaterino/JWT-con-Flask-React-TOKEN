@@ -12,6 +12,7 @@ export const Registro = () => {
 
   const handleClick = () => {
     actions.signup(nombre, apellidos, email, password);
+    navigate("/")
   };
 
   return (
