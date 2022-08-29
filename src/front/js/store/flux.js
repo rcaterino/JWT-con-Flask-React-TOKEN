@@ -35,11 +35,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }),
         };
         try {
-          const resp = await fetch(
-            "https://3001-rcaterino-jwtconflaskre-wbj0pir7o0l.ws-eu63.gitpod.io/" +
-              "api/token",
-            opts
-          );
+          const resp = await fetch(process.env.BACKEND_URL + "api/token", opts);
           if (resp.status !== 200) {
             new Error("error from login in context");
             alert("usuario no registrado");
@@ -59,10 +55,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         sessionStorage.removeItem("token");
         setStore({ token: null });
         return true;
-
       },
 
-      /* Función para optener token almacenado en sessionStorage */ 
+      /* Función para optener token almacenado en sessionStorage */
       getTokenFromSession: () => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
@@ -80,13 +75,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             apellidos: apellidos,
             email: email,
             password: password,
-            is_active: true
+            is_active: true,
           }),
         };
         try {
           let resp = await fetch(
-            "https://3001-rcaterino-jwtconflaskre-wbj0pir7o0l.ws-eu63.gitpod.io/" +
-              "api/registro",
+            process.env.BACKEND_URL + "api/registro",
             opts
           );
           if (resp.status !== 200) {
