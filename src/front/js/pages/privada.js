@@ -19,7 +19,7 @@ export const Privada = () => {
       store.token === "" ||
       store.token === undefined ? (
         <div>
-          <Link to= "/"></Link>
+          <p>No haz iniciado sesión</p>
         </div>
       
       ) : (

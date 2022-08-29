@@ -10,8 +10,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
-
-
 #Create flask app
 api = Blueprint('api', __name__)
 
@@ -19,7 +17,6 @@ api = Blueprint('api', __name__)
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])
 def create_token():
-    
     info_request = request.get_json()
     query = User.query.filter_by(email = info_request['email'], password = info_request['password']).first()
     user = query.serialize()
@@ -49,7 +46,8 @@ def createUser():
     newUser = User(nombre = info_request['nombre'], apellidos = info_request['apellidos'], email = info_request['email'], password = info_request['password'], is_active = info_request['is_active'])
     db.session.add(newUser)
     db.session.commit()
-    return jsonify("usuario creado"), 200
+    access_token = create_access_token(identity=info_request['email'])
+    return jsonify(access_token=access_token), 200
     
 #----------------------------------------------------------------------------
 @api.route('/user/<int:id>', methods=['DELETE'])

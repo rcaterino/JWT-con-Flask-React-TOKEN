@@ -6,11 +6,10 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const handleClick = () => {
     actions.login(email, password);
-    navigate("/");
+    
   };
 
   return (

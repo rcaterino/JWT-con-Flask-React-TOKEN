@@ -54,12 +54,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      /** Función para deslogear al usuario, remueve el token del sessionStorage */
       logout: () => {
         sessionStorage.removeItem("token");
         setStore({ token: null });
+        return true;
 
       },
-      
+
+      /* Función para optener token almacenado en sessionStorage */ 
       getTokenFromSession: () => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
@@ -81,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }),
         };
         try {
-          resp = await fetch(
+          let resp = await fetch(
             "https://3001-rcaterino-jwtconflaskre-wbj0pir7o0l.ws-eu63.gitpod.io/" +
               "api/registro",
             opts
@@ -90,7 +93,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             new Error("there has been an error");
             return false;
           }
-          data = await resp.json();
+          let data = await resp.json();
+          sessionStorage.setItem("token", data.access_token);
+          setStore({ token: data.access_token });
           return true;
         } catch (error) {
           console.error(error);

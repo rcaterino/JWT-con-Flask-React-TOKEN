@@ -6,7 +6,13 @@ import { Context } from "../store/appContext";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+
+
+  const handleLogout = ()=> {
+    actions.logout();
+    navigate("/");
+  }
 
   useEffect(() => {
     actions.getTokenFromSession();
@@ -40,7 +46,7 @@ export const Navbar = () => {
               <span className="navbar-brand mb-0 h1">Mi perfil</span>
             </Link>
             <div className="ml-auto">
-              <button className="btn btn-primary" onClick={actions.logout}>
+              <button className="btn btn-primary" onClick={()=> {handleLogout()}}>
                 LogOut
               </button>
             </div>

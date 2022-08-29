@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Registro = () => {
   const { store, actions } = useContext(Context);
@@ -9,10 +9,10 @@ export const Registro = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();
-
+ 
   const handleClick = () => {
     actions.signup(nombre, apellidos, email, password);
-    navigate("/")
+    navigate ("/");
   };
 
   return (
