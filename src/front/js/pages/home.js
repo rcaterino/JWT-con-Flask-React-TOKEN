@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { Link } from "react-router-dom";
+import { Login } from "../component/login";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -17,11 +17,17 @@ export const Home = () => {
       store.token === "" ||
       store.token === undefined ? (
         <div className="text-center mt-5">
-      <h1 className="text-center">Bienvenido al página Home, inicia sesión para acceder a tu página privada</h1>
+      <h1 className="text-center">Bienvenido al Home Page</h1>
+      <h4>Esto es un proyecto sobre Autenticación con JWT Extention</h4>
+      <h6>Para evaluar mi funcionamiento, debes iniciar sesión</h6>
+      <Login />
     </div>
+      
       ) : (
         <div className="text-center mt-5">
-      <h1 className="text-center">estás en una sesión iniciada</h1>
+    <h1 className="text-center">Bienvenido al Home Page</h1>
+      <h4>Esto es un proyecto sobre Autenticación con JWT Extention</h4>
+      <h6>Muy bien, haz iniciado sesión, visita tu página de perfil</h6>
     </div>
       )}
     </>

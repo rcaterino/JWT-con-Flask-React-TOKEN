@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
@@ -21,9 +21,7 @@ export const Navbar = () => {
               <span className="navbar-brand mb-0 h1">Home</span>
             </Link>
             <div className="ml-auto">
-              <Link to="/login">
-                <button className="btn btn-primary">Login</button>
-              </Link>
+              
             </div>
           </div>
         </nav>

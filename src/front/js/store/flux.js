@@ -36,11 +36,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const resp = await fetch(
-            process.env.BACKEND_URL + "/api/token",
+            "https://3001-rcaterino-jwtconflaskre-wbj0pir7o0l.ws-eu63.gitpod.io/" +
+              "api/token",
             opts
           );
           if (resp.status !== 200) {
             new Error("error from login in context");
+            alert("usuario no registrado");
             return false;
           }
           const data = await resp.json();
@@ -55,26 +57,35 @@ const getState = ({ getStore, getActions, setStore }) => {
       logout: () => {
         sessionStorage.removeItem("token");
         setStore({ token: null });
+
       },
+      
       getTokenFromSession: () => {
         const token = sessionStorage.getItem("token");
         if (token && token !== "" && token !== undefined)
           setStore({ token: token });
       },
 
-      signup: async (email, password) => {
+      signup: async (nombre, apellidos, email, password) => {
         const opts = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            nombre: nombre,
+            apellidos: apellidos,
             email: email,
             password: password,
+            is_active: true
           }),
         };
         try {
-          resp = await fetch(process.env.BACKEND_URL + "/api/signup", opts);
+          resp = await fetch(
+            "https://3001-rcaterino-jwtconflaskre-wbj0pir7o0l.ws-eu63.gitpod.io/" +
+              "api/registro",
+            opts
+          );
           if (resp.status !== 200) {
             new Error("there has been an error");
             return false;
