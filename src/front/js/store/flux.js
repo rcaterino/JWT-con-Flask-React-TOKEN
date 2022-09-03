@@ -35,7 +35,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           }),
         };
         try {
-          const resp = await fetch(process.env.BACKEND_URL + "api/token", opts);
+          const resp = await fetch(
+            process.env.BACKEND_URL + "/api/token",
+            opts
+          );
           if (resp.status !== 200) {
             new Error("error from login in context");
             alert("usuario no registrado");
@@ -80,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           let resp = await fetch(
-            process.env.BACKEND_URL + "api/registro",
+            process.env.BACKEND_URL + "/api/registro",
             opts
           );
           if (resp.status !== 200) {
